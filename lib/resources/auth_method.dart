@@ -8,7 +8,8 @@ class AuthMethod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Stream<User?>  get authChanges => _auth.authStateChanges();
+  Stream<User?> get authChanges => _auth.authStateChanges();
+  User get user => _auth.currentUser!;
 
   Future<bool> signInWithGoogle(BuildContext context) async {
     bool res = false;
@@ -46,5 +47,13 @@ class AuthMethod {
       res = false;
     }
     return res;
+  }
+
+  void signOut() async {
+    try {
+      _auth.signOut();
+    } catch (e) {
+      print(e);
+    }
   }
 }
